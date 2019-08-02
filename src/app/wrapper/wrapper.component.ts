@@ -15,17 +15,21 @@ export class WrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.apiCaller.getSubjectObservable().subscribe(data => console.log(data));
+    this.subscription = this.apiCaller.getSubjectObservable().subscribe(data => {
+      console.log('With Subject(Hier wurde noch keine Umwandlung zu Projects vorgenommen):');
+      console.log(data);
+    });
     this.apiCaller.getWithSubject();
     this.getDataWithPromise();
   }
 
   private async getDataWithPromise() {
-    const data = await this.getDataWithPromise();
+    const data = await this.apiCaller.getWithPromise();
+    console.log('With Promise:')
     console.log(data);
   }
 
-  private ngOnDestroy() {
+  ngOnDestroy() {
     //Nachdem dies eine eigene Subscription ist, sollte unsubscribe() verwendet werden, wenn die Komponente gelöscht wird.
     this.subscription.unsubscribe();
   }

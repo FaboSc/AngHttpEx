@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
-import {Promise} from 'q';
 import {map} from 'rxjs/operators';
 import {Project} from '../classes/project';
 
@@ -34,7 +33,7 @@ export class ApiCallerService {
   private baseUrl = 'http://l234:8080/SimpleVersion-war-1.0/resources/';
 
   // Wird für Projektspezifische Anfragen genutzt
-  private projectUrl = 'project/';
+  private projectUrl = 'Project/';
 
   private subject = new Subject();
 
@@ -71,6 +70,7 @@ export class ApiCallerService {
     const searchUrl = this.baseUrl + this.projectUrl + 'GetAll';
     // Da wir ein observable zurückbekomen, ist es möglich die Daten vor der rückgabe zu bearbeiten. Dafür nutzen wir .pipe() und rxjs operators.
     // Weitere infos dazu hier: "https://www.learnrxjs.io/operators/"
+
     return new Promise(resolve => {
       this.http.get(searchUrl)
         .pipe(map(data => this.createProjectArray(data)))
@@ -103,7 +103,7 @@ export class ApiCallerService {
     Oder ihr müsst euer altes Objekt überschreiben:
     params = params.set();
     */
-    const params = new HttpParams().set('id', project.id,toString());
+    const params = new HttpParams().set('id', project.id.toString());
     // Setzen der Url
     const requestUrl = this.baseUrl + this.projectUrl + 'DeleteProject';
     this.http.post(requestUrl, {params: params});
