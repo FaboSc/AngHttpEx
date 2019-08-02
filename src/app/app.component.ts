@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApiCallerService} from './services/api-caller.service';
 
 @Component({
   selector: 'app-root',
